@@ -91,12 +91,18 @@
 {
     if (!self.enteredPin)
     {
-        [self startPinConfirmation];
+        [self validatePin];
     }
     else
     {
         [self validateConfirmedPin];
     }
+}
+
+- (void)invalidateCurrentPin
+{
+    self.enteredPin = nil;
+    self.currentPin = @"";
 }
 
 - (void)startPinConfirmation
@@ -106,7 +112,24 @@
     [lockScreenView updateDetailLabelWithString:self.pinConfirmationText animated:YES completion:nil];
     [lockScreenView resetAnimated:YES];
 }
-         
+
+- (void)validatePin
+{
+    BOOL isValidPin = YES;
+    if ([self.setupScreenDelegate respondsToSelector:@selector(isValidPin:padLockScreenSetupViewController:)])
+    {
+        isValidPin = [self.setupScreenDelegate isValidPin:self.currentPin padLockScreenSetupViewController:self];
+    }
+    if (isValidPin)
+    {
+        [self startPinConfirmation];
+    }
+    else
+    {
+        [self resetPinWithErrorString:self.invalidPinText];
+    }
+}
+
 - (void)validateConfirmedPin
 {
     if ([self.currentPin isEqualToString:self.enteredPin])
@@ -118,17 +141,21 @@
     }
     else
     {
-        [lockScreenView updateDetailLabelWithString:self.pinNotMatchedText animated:YES completion:nil];
-		[lockScreenView animateFailureNotification];
-        [lockScreenView resetAnimated:YES];
-        self.enteredPin = nil;
-        self.currentPin = @"";
-        
-        // viberate feedback
-        if (self.errorVibrateEnabled)
-        {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        }
+        [self resetPinWithErrorString:self.pinNotMatchedText];
+    }
+}
+
+- (void)resetPinWithErrorString:(NSString *)errorString {
+    [lockScreenView updateDetailLabelWithString:errorString animated:YES completion:nil];
+    [lockScreenView animateFailureNotification];
+    [lockScreenView resetAnimated:YES];
+    self.enteredPin = nil;
+    self.currentPin = @"";
+
+    // viberate feedback
+    if (self.errorVibrateEnabled)
+    {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
 }
 

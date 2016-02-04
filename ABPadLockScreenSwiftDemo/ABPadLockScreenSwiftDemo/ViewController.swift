@@ -50,6 +50,7 @@ class ViewController: UIViewController, ABPadLockScreenSetupViewControllerDelega
     
     @IBAction func setPinSelected(sender: AnyObject) {
         let lockSetupScreen = ABPadLockScreenSetupViewController(delegate: self, complexPin: false, subtitleLabelText: "Select a pin")
+        lockSetupScreen.invalidPinText = "Invalid pin"
         lockSetupScreen.tapSoundEnabled = true
         lockSetupScreen.errorVibrateEnabled = true
         lockSetupScreen.modalPresentationStyle = UIModalPresentationStyle.FullScreen
@@ -66,6 +67,10 @@ class ViewController: UIViewController, ABPadLockScreenSetupViewControllerDelega
     
     func unlockWasCancelledForSetupViewController(padLockScreenViewController: ABPadLockScreenAbstractViewController!) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    func isValidPin(pin: String!, padLockScreenSetupViewController padLockScreenViewController: ABPadLockScreenSetupViewController!) -> Bool {
+        return pin != "0000"
     }
     
     //MARK: Lock Screen Delegate

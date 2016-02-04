@@ -37,6 +37,7 @@
 @property (nonatomic, strong, readonly) NSString *subtitleLabelText;
 @property (nonatomic, strong) NSString *pinNotMatchedText;
 @property (nonatomic, strong) NSString *pinConfirmationText;
+@property (nonatomic, strong) NSString *invalidPinText;
 
 - (instancetype)initWithDelegate:(id<ABPadLockScreenSetupViewControllerDelegate>)delegate;
 - (instancetype)initWithDelegate:(id<ABPadLockScreenSetupViewControllerDelegate>)delegate complexPin:(BOOL)complexPin;
@@ -48,5 +49,7 @@
 @required
 - (void)pinSet:(NSString *)pin padLockScreenSetupViewController:(ABPadLockScreenSetupViewController *)padLockScreenViewController;
 - (void)unlockWasCancelledForSetupViewController:(ABPadLockScreenAbstractViewController *)padLockScreenViewController;
+@optional
+- (BOOL)isValidPin:(NSString *)pin padLockScreenSetupViewController:(ABPadLockScreenSetupViewController *)padLockScreenViewController;
 
 @end

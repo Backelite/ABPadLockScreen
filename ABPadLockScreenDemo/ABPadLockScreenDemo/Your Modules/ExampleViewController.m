@@ -48,6 +48,7 @@
     ABPadLockScreenSetupViewController *lockScreen = [[ABPadLockScreenSetupViewController alloc] initWithDelegate:self complexPin:YES subtitleLabelText:@"You need a PIN to continue"];
     lockScreen.tapSoundEnabled = YES;
     lockScreen.errorVibrateEnabled = YES;
+    lockScreen.invalidPinText = @"Invalid pin";
 	
     lockScreen.modalPresentationStyle = UIModalPresentationFullScreen;
     lockScreen.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -124,6 +125,10 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"Pin Setup Cnaclled");
+}
+
+- (BOOL)isValidPin:(NSString *)pin padLockScreenSetupViewController:(ABPadLockScreenSetupViewController *)padLockScreenViewController {
+    return ![pin isEqualToString:@"0000"];
 }
 
 @end
