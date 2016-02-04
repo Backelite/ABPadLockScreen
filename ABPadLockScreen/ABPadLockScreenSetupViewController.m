@@ -75,6 +75,7 @@
 {
     _pinNotMatchedText = NSLocalizedString(@"Pincode did not match.", @"");
     _pinConfirmationText = NSLocalizedString(@"Re-enter your new pincode", @"");
+    _invalidPinText = NSLocalizedString(@"Invalid pincode", @"");
 }
 
 #pragma mark -
