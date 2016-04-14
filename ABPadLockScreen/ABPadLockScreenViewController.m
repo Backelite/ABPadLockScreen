@@ -123,13 +123,17 @@
     
     if (self.remainingAttempts > 1)
     {
-        [lockScreenView updateDetailLabelWithString:[NSString stringWithFormat:@"%ld %@", (long)self.remainingAttempts, self.pluralAttemptsLeftString]
-                                           animated:YES completion:nil];
+        if (self.pluralAttemptsLeftString) {
+            [lockScreenView updateDetailLabelWithString:[NSString stringWithFormat:@"%ld %@", (long)self.remainingAttempts, self.pluralAttemptsLeftString]
+                                               animated:YES completion:nil];
+        }
     }
     else if (self.remainingAttempts == 1)
     {
-        [lockScreenView updateDetailLabelWithString:[NSString stringWithFormat:@"%ld %@", (long)self.remainingAttempts, self.singleAttemptLeftString]
-                                           animated:YES completion:nil];
+        if (self.singleAttemptLeftString) {
+            [lockScreenView updateDetailLabelWithString:[NSString stringWithFormat:@"%ld %@", (long)self.remainingAttempts, self.singleAttemptLeftString]
+                                               animated:YES completion:nil];
+        }
     }
     else if (self.remainingAttempts == 0)
     {
